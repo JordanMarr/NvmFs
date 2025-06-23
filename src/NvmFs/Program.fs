@@ -5,6 +5,7 @@ open Input
 open System.CommandLine.Invocation
 open System.CommandLine.Help
 open NvmFs.Cmd
+open System.Threading.Tasks
 
 let installCommand = command "install" {
   description "Installs the specified node version or the latest LTS by default"
@@ -44,24 +45,12 @@ let listCommand = command "list" {
   setAction Actions.List
 }
 
-let rootHandler(ctx) = task {
-  //let hc =
-  //  HelpContext(
-  //    ctx.HelpBuilder,
-  //    ctx.Parser.Configuration.RootCommand,
-  //    System.Console.Out
-  //  )
-
-  //ctx.HelpBuilder.Write(hc)
-  return 0
-}
-
 [<EntryPoint>]
 let main argv =
+  let argv = if argv.Length = 0 then [| "--help" |] else argv
   rootCommand argv {
     description "nvmfs is a simple node version manager that just downloads and sets node versions. That's it!"
-    inputs context
-    setAction rootHandler
+    setAction (fun _ -> Task.FromResult 0)
     addCommand installCommand
     addCommand uninstallCommand
     addCommand useCommand
