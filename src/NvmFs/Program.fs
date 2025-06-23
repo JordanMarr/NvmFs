@@ -3,7 +3,6 @@ module NvmFs.Main
 open FSharp.SystemCommandLine
 open Input
 open NvmFs.Cmd
-open System.Threading.Tasks
 
 let installCommand = command "install" {
   description "Installs the specified node version or the latest LTS by default"
