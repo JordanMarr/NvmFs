@@ -45,10 +45,10 @@ let listCommand = command "list" {
 
 [<EntryPoint>]
 let main argv =
-  let argv = if argv.Length = 0 then [| "--help" |] else argv
   rootCommand argv {
     description "nvmfs is a simple node version manager that just downloads and sets node versions. That's it!"
-    setAction (fun _ -> Task.FromResult 0)
+    inputs context
+    helpActionAsync
     addCommand installCommand
     addCommand uninstallCommand
     addCommand useCommand
